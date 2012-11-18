@@ -1,7 +1,8 @@
 **The short and the long:**
 -----------
 
-######Tested on Ubuntu 12.04 LTS. Requirements:  
+######Tested on Ubuntu 12.04 LTS. 
+######(Requirements)  
 Apache Server (V2.2.22)      
 PHP5 (V5.3.10)  
 Python (V2.7.3) installed as standard  
@@ -9,6 +10,7 @@ Redis (V2.7.3)
 xdotool (V1:2)  
 Python-redis (V2.7.3)  
 
+######Installation
 ```terminal
 sudo apt-get install apache2  
 sudo apt-get install php5  
