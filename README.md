@@ -379,6 +379,6 @@ This baby goes into Redis and checks for commands and dispatches the relevant co
 
 If everthing works properly, when you access the minisite on your phone and press a button. This is what you can expect to see when running the remote.py in terminal and then pressing a button on the site.
 
-[Remote.ry terminal output](https://raw.github.com/drpain/web-the-black-mote/master/assets/img/output.jpg)
+[Remote.py terminal output](https://raw.github.com/drpain/web-the-black-mote/master/assets/img/output.jpg)
 
 
