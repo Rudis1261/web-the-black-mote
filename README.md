@@ -261,7 +261,7 @@ All this really does is take the action sent through from the jQuery and adds th
     ?>
 
 ***Remote.py***  
-This baby goes into Redis and checks for commands and dispatches the relevant command to the linux kernel to be actioned. Very nice! **Remember to make this executable if you want to launch with it** *(sudo chomod +x remote.py)*  
+This baby goes into Redis and checks for commands and dispatches the relevant command to the linux kernel to be actioned. Very nice! **Remember to make this executable if you want to launch with it** *(sudo chmod +x remote.py)*  
 <!-- language: lang-js -->  
 
     #!/usr/bin/env python
