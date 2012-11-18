@@ -9,11 +9,13 @@ Redis (V2.7.3)
 xdotool (V1:2)  
 Python-redis (V2.7.3)  
 
-```sudo apt-get install apache2  
+```terminal
+sudo apt-get install apache2  
 sudo apt-get install php5  
 sudo apt-get install redis-server  
 sudo apt-get install xdotool  
-sudo apt-get install python-redis```
+sudo apt-get install python-redis
+```
 
 *If there are any more dependencies, I apologize as this is all that springs to mind.*
   
