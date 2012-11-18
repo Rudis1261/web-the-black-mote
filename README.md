@@ -14,21 +14,21 @@
 - Python-redis (V2.7.3-0ubuntu2)
 -- sudo apt-get install python-redis
 
-If there are any more dependancies, I apologize as this is all that springs to mind. 
+If there are any more dependencies, I apologize as this is all that springs to mind. 
   
 ***Once upon a time***  
 
 I though I would share this, should someone look for something similar and happen upon this. 
 
-The easiest way I found to send the keystrokes through Python is by installing ***xdotool*** which is a unix based scripting tool, wich is pretty awesome. It supports all the multimedia keys. Including the context menu a.k.a "Menu". 
+The easiest way I found to send the keystrokes through Python is by installing ***xdotool*** which is a unix based scripting tool, which is pretty awesome. It supports all the multimedia keys. Including the context menu a.k.a "Menu". 
 
 ***So what did I need it for?***  
 I built a remote for my ***Ubuntu*** since my Compro Remote stopped working.
 
 ***How does it work?***  
-It leverages Apache, Bootstrap, PHP, Redis, Python and finally xdotools (Boy that's a mouthfull). I created a mini website which I access through my WIFI with remote buttons which when clicked sends the command in the background to the PHP  Script running on Apache.
+It leverages Apache, Bootstrap, PHP, Redis, Python and finally xdotools (Boy that's a mouthful). I created a mini website which I access through my WIFI with remote buttons which when clicked sends the command in the background to the PHP  Script running on Apache.
 
-This PHP script then saves the command and values in Redis which is polled constantly by Python. Once Python picks the command up. It checks it in the dictionary of commands and sends the appropiate command line to xdotool. Xdotool then runs the Media Keys or starts Rhythmbox or XBMC or pauses and plays. Whatever. So far it's working like a charm.
+This PHP script then saves the command and values in Redis which is polled constantly by Python. Once Python picks the command up. It checks it in the dictionary of commands and sends the appropriate command line to xdotool. Xdotool then runs the Media Keys or starts Rhythm-box or XBMC or pauses and plays. Whatever. So far it's working like a charm.
 
 
 ----------
@@ -90,7 +90,7 @@ Generates the remote through web interface
                         <div>
                             <!--
                                 You may notice I have some data-{variable} html attributes. These are used by my script later
-                                The data-keycode is the keycode value for the button pressed, this makes it a bit easier to use
+                                The data-keycode is the key-code value for the button pressed, this makes it a bit easier to use
                                 Don't know how to pick this up, check my remote.js file
                                 
                                 The id is the action to be performed. And the click is picked up with the "remoteKeys" and "volume" classes
@@ -191,7 +191,7 @@ This is what will detect key and button presses and send the command to the PHP 
 
 <!-- language: lang-js -->
 
-    // Lets make it easy to change the filename
+    // Lets make it easy to change the file name
     var myScript = "index.php";
 
     // When the key is pressed, set it in the DB by running the AJAX
@@ -277,7 +277,7 @@ All this really does is take the action sent through from the jQuery and adds th
     ?>
 
 ***Remote.py***  
-This baby goes into Redis and checks for commands and dispatches the relevant command to the linux kernel to be actioned. Very nice! **Remember to make this executable if you want to launch with it** *(sudo chmod +x remote.py)*  
+This baby goes into Redis and checks for commands and dispatches the relevant command to the Linux kernel to be action-ed. Very nice! **Remember to make this executable if you want to launch with it** *(sudo chmod +x remote.py)*  
 <!-- language: lang-js -->  
 
     #!/usr/bin/env python
@@ -347,13 +347,13 @@ This baby goes into Redis and checks for commands and dispatches the relevant co
     # This little baby is what sends the command from the dictionary to the kernel to be processed.
     def xdotool(action):
         ps = subprocess.Popen(action);
-        print action #Comment this out, if you do not want to see which action was taken. Usefull for debugging
+        print action #Comment this out, if you do not want to see which action was taken. Useful for debugging
         
         
     # This is the main loop with a small time delay so we do not chow the CPU to bits
     while 1:
         
-        # Check if a remote key was pressed by quering Redis
+        # Check if a remote key was pressed by querying Redis
         if int(Redis.get("read")) == 0:
             
             # Lets get the command
