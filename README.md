@@ -1,7 +1,7 @@
 **The short and the long:**
 -----------
 
->Tested on Ubuntu 12.04 LTS. Requirements:  
+######Tested on Ubuntu 12.04 LTS. Requirements:
 Apache Server (V2.2.22)
     sudo apt-get install apache2    
 PHP5 (V5.3.10)  
