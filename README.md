@@ -54,8 +54,7 @@ This is what will detect key and button presses and send the command to the PHP 
 ***class.remotecontrol.php***  
 All this really does is take the action sent through from the jQuery and adds the values to Redis so Python can pick it up.   
 
-<!-- language-all: lang-php -->
-
+```php
     <?php
         // Create the remote object
         class RemoteControl
@@ -83,11 +82,12 @@ All this really does is take the action sent through from the jQuery and adds th
     	}
         }    
     ?>
+```
 
 ***Remote.py***  
 This baby goes into Redis and checks for commands and dispatches the relevant command to the Linux kernel to be action-ed. Very nice! **Remember to make this executable if you want to launch with it** *(sudo chmod +x remote.py)*  
-<!-- language: lang-js -->  
 
+```python2.7
     #!/usr/bin/env python
     # Import the python modules we will need
     import time, subprocess, redis
@@ -168,5 +168,4 @@ This baby goes into Redis and checks for commands and dispatches the relevant co
             getCommand()  
             
         time.sleep(0.1) # Little sleep required (Don't we all)
-
-
+```
