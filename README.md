@@ -42,7 +42,7 @@ This PHP script then saves the command and values in Redis which is polled const
 ***index.php***    
 Generates the remote through web interface  
 
-[Checkout the latest index.php](hhttps://github.com/drpain/web-the-black-mote/blob/master/index.php)  
+[Checkout the latest index.php](https://github.com/drpain/web-the-black-mote/blob/master/index.php)  
 
 ![Web-the-black-mote GUI](https://raw.github.com/drpain/web-the-black-mote/master/assets/img/webmote.jpg)
 
