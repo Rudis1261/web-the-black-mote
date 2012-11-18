@@ -6,7 +6,7 @@
 -- sudo apt-get install apache2
 - PHP5 Interpreter (V5.3.10-1ubuntu3.4)
 -- sudo apt-get install php5
-- Python (V2.7.3-0ubuntu2)
+- Python (V2.7.3-0ubuntu2) installed as standard
 - Redis (V2.7.3-0ubuntu2)
 -- sudo apt-get install redis-server
 - xdotool (V1:2.20110530.1-3ubuntu1)
