@@ -33,6 +33,7 @@ This PHP script then saves the command and values in Redis which is polled const
 
 ----------
 
+![Webmote](https%3A%2F%2Fraw.github.com%2Fdrpain%2Fweb-the-black-mote%2Fmaster%2Fassets%2Fimg%2Fwebmote.jpg "Web-the-black-mote gui")
 
 ## The CODE ##
 ***index.php***    
