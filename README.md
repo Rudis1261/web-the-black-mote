@@ -33,13 +33,12 @@ This PHP script then saves the command and values in Redis which is polled const
 
 ----------
 
-![Web-the-black-mote GUI](https://raw.github.com/drpain/web-the-black-mote/master/assets/img/webmote.jpg)
-
 ## The CODE ##
 ***index.php***    
-Generates the remote through web interface  
-[1]: https://github.com/drpain/web-the-black-mote/blob/master/index.php        "Checkout the latest index.php"  
+Generates the remote through web interface
+[Checkout the latest index.php](hhttps://github.com/drpain/web-the-black-mote/blob/master/index.php)  
 
+![Web-the-black-mote GUI](https://raw.github.com/drpain/web-the-black-mote/master/assets/img/webmote.jpg)
 
 ***Remote.js***  
 This is what will detect key and button presses and send the command to the PHP script  
