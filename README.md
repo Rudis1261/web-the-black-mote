@@ -1,13 +1,29 @@
 **The short and the long:**
 -----------
 
+**Tested on Ubuntu 12.04 LTS. Requirements:**
+- Apache Server (V2.2.22-1ubuntu1.2)
+-- sudo apt-get install apache2
+- PHP5 Interpreter (V5.3.10-1ubuntu3.4)
+-- sudo apt-get install php5
+- Python (V2.7.3-0ubuntu2)
+- Redis (V2.7.3-0ubuntu2)
+-- sudo apt-get install redis-server
+- xdotool (V1:2.20110530.1-3ubuntu1)
+-- sudo apt-get install xdotool
+- Python-redis (V2.7.3-0ubuntu2)
+-- sudo apt-get install python-redis
+
+If there are any more dependancies, I apologize as this is all that springs to mind. 
   
+***Once upon a time***  
+
 I though I would share this, should someone look for something similar and happen upon this. 
 
 The easiest way I found to send the keystrokes through Python is by installing ***xdotool*** which is a unix based scripting tool, wich is pretty awesome. It supports all the multimedia keys. Including the context menu a.k.a "Menu". 
 
 ***So what did I need it for?***  
-I built a remote for my ubuntu since my Compro Remote stopped working.
+I built a remote for my ***Ubuntu*** since my Compro Remote stopped working.
 
 ***How does it work?***  
 It leverages Apache, Bootstrap, PHP, Redis, Python and finally xdotools (Boy that's a mouthfull). I created a mini website which I access through my WIFI with remote buttons which when clicked sends the command in the background to the PHP  Script running on Apache.
