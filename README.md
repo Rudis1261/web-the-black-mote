@@ -73,7 +73,7 @@ if (  (isset($_GET['command']))
 // http://jquery.com/
 ?>
 ```
-```html5
+```html
 <!DOCTYPE html>
 <html>
     
@@ -199,7 +199,7 @@ This is what will detect key and button presses and send the command to the PHP 
 
 [Checkout the latest Remote.js](https://github.com/drpain/web-the-black-mote/blob/master/assets/js/remote.js)
 
-```jquery
+```javascript
 // Lets make it easy to change the filename
 var myScript = "index.php";
 
