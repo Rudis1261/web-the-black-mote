@@ -1,6 +1,8 @@
 **The short and the long:**
 -----------
 
+![Workflow](https://raw.github.com/drpain/web-the-black-mote/master/assets/img/workflow.jpg)  
+
 ######Tested on Ubuntu 12.04 LTS. 
 ######(Requirements)  
 Apache Server (V2.2.22)      
@@ -45,6 +47,7 @@ Generates the remote through web interface
 [Checkout the latest index.php](https://github.com/drpain/web-the-black-mote/blob/master/index.php)  
 
 ![Web-the-black-mote GUI](https://raw.github.com/drpain/web-the-black-mote/master/assets/img/webmote.jpg)
+
 
 ```php
 <?php
@@ -379,6 +382,6 @@ This baby goes into Redis and checks for commands and dispatches the relevant co
 
 If everthing works properly, when you access the minisite on your phone and press a button. This is what you can expect to see when running the remote.py in terminal and then pressing a button on the site.
 
-[Remote.py terminal output](https://raw.github.com/drpain/web-the-black-mote/master/assets/img/output.jpg)
+![Remote.py terminal output](https://raw.github.com/drpain/web-the-black-mote/master/assets/img/output.jpg)
 
 
