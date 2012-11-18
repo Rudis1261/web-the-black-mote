@@ -3,18 +3,18 @@
 
 **Tested on Ubuntu 12.04 LTS. Requirements:**
 * Apache Server (V2.2.22)
-** sudo apt-get install apache2
-* PHP5 (V5.3.10)
-** sudo apt-get install php5
-* Python (V2.7.3) installed as standard
-* Redis (V2.7.3)
-** sudo apt-get install redis-server
-* xdotool (V1:2)
-** sudo apt-get install xdotool
-* Python-redis (V2.7.3)
-** sudo apt-get install python-redis
+** sudo apt-get install apache2  
+* PHP5 (V5.3.10)  
+** sudo apt-get install php5  
+* Python (V2.7.3) installed as standard  
+* Redis (V2.7.3)  
+** sudo apt-get install redis-server  
+* xdotool (V1:2)  
+** sudo apt-get install xdotool  
+* Python-redis (V2.7.3)  
+** sudo apt-get install python-redis  
 
-If there are any more dependencies, I apologize as this is all that springs to mind. 
+*If there are any more dependencies, I apologize as this is all that springs to mind.*
   
 ***Once upon a time***  
 
