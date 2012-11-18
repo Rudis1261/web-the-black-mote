@@ -50,6 +50,7 @@ Generates the remote through web interface
 This is what will detect key and button presses and send the command to the PHP script  
 [1]: https://github.com/drpain/web-the-black-mote/blob/master/assets/js/remote.js        "Checkout the latest remote.js"  
 
+GET /repos/:drpain/:web-the-black-remote/contents/:index.php
 
 ***class.remotecontrol.php***  
 All this really does is take the action sent through from the jQuery and adds the values to Redis so Python can pick it up.   
