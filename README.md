@@ -180,10 +180,10 @@ if (  (isset($_GET['command']))
             
             <!-- Time for the volume controls -->
             <div class="row">
-                <div class="btn-group">               
-                    <button class="btn btn-large volume" data-keycode="113" data-value="down">Volume Down <i class="icon icon-volume-down"></i></button>                
+                <div class="btn-group">       
+                    <button class="btn btn-large remoteKeys" data-keycode="113" id="vol-down">Volume Down <i class="icon icon-volume-down"></i></button>                
                     <button class="btn btn-large activity"><i class="activity-icon icon icon-heart"></i></button>           
-                    <button class="btn btn-large volume" data-keycode="101" data-value="up">Volume Up <i class="icon icon-volume-up"></i></button>
+                    <button class="btn btn-large remoteKeys" data-keycode="101" id="vol-up">Volume Up <i class="icon icon-volume-up"></i></button>
                 </div>
             </div>
     
@@ -224,35 +224,17 @@ $(".remoteKeys").click(function(event) {
 	});
 });
 
-// Lets set up some quick buttons
-$(document).keypress(function(event) {
-	event.preventDefault();
-	//alert(event.which); // Keep this to check the keys, just uncomment the first section
-	$('[data-keycode="' + event.which + '"]').click();	
-});
-
 // Clear the activity display 
 function clear() {	
 	$(".activity").removeClass("btn-primary btn-danger");
 	$(".activity-icon").removeClass("icon-white");
 };
 
-// When a volume key is pressed.
-$(".volume").click(function(event) {
-        event.preventDefault();        
-        var getVolume = $(this).attr('data-value');	
-	$.get(myScript, { command: "volume", value: getVolume },
-	function(data){
-		if (data == 1)
-		{			
-			$(".activity").addClass("btn-primary");
-			$(".activity-icon").addClass("icon-white");
-		} else {
-			$(".activity").addClass("btn-danger");
-			$(".activity-icon").addClass("icon-white");
-		}
-		setTimeout(clear, 200);
-	});
+// Lets get some shortcuts going
+$(document).keypress(function(event) {
+	event.preventDefault();
+	//alert(event.which); // Keep this to check the keys, just uncomment the first section
+	$('[data-keycode="' + event.which + '"]').click();	
 });
 ```
 
@@ -298,86 +280,104 @@ This baby goes into Redis and checks for commands and dispatches the relevant co
  
 
 ```python
-    #!/usr/bin/env python
-    # Import the python modules we will need
-    import time, subprocess, redis
+#!/usr/bin/env python
+import time, subprocess, redis, os, commands
+
+# Lets get connected to Redis
+Redis = redis.Redis("localhost");
+
+
+
+# This will get the current command from Redis and if it's a volume key then run the volume function
+# Otherwise run the commandKeys, these two could be combined but it works now so I will leave it alone
+def getCommand():   
     
-    # Lets get connected to Redis
-    Redis = redis.Redis("localhost");
+    # Get the actual values from Redis
+    command = Redis.get("command");
+    value = Redis.get("value");
+    timestamp = Redis.get("timestamp");
+
+    # Run the command       
+    if command == 'key':        
+        commandKeys(value)
     
-    # This will get the current command from Redis and if it's a volume key then run the volume function
-    # Otherwise run the commandKeys, these two could be combined but it works now so I will leave it alone
-    def getCommand():   
-        
-        # Get the actual values from Redis
-        command = Redis.get("command");
-        value = Redis.get("value");
-        timestamp = Redis.get("timestamp");
-        
-        # Run the command in question
-        if command == 'volume':
-            volume(value)
-            
-        if command == 'key':        
-            commandKeys(value)
-        
-        # We need to set read to true so we do not loop through the same action all the time     
-        Redis.set("read", 1)
-     
-    # This will perform the actions   
-    def commandKeys(pressed):
-        
-        # The dictionary with the commands and switches to be run
-        keyDict = {'up':['xdotool', 'key', "Up"],
-                'down':['xdotool', 'key', "Down"],
-                'left':['xdotool', 'key', "Left"],
-                'right':['xdotool', 'key', "Right"],
-                'ok':['xdotool', 'key', "KP_Enter"],
-                'play':['xdotool', 'key', "XF86AudioPlay"],
-                'info':['xdotool', 'key', 'Menu'],
-                'back':['xdotool', 'key', "Escape"],
-                'next':['xdotool', 'key', "XF86AudioNext"],
-                'prev':['xdotool', 'key', "XF86AudioPrev"],
-                'xbmc':['xbmc'],
-                'stop':['xdotool', 'key', "XF86AudioStop"],
-                'music': ['xdotool', 'key', "XF86Go"],
-                }
-        
-        # Was the keypress valid? If so, run the relevant command
-        if pressed in keyDict:        
-            xdotool(keyDict[pressed])
-        else:
-            print pressed, "command not found, Eish"
+    # We need to set read to true so we do not loop through the same action all the time     
+    Redis.set("read", 1)
+ 
+# This function will be used to confirm whether an application is running   
+def appRunning(appName):
+    getStatus = commands.getoutput('ps -C ' + appName)
+    if appName in getStatus:
+        return True
+    else:
+        return False
+ 
+# This will perform the actions   
+def commandKeys(pressed):
     
-    # Same as commandKeys, but for volumes
-    def volume(upDown):
+    # To check which applications are running. This will be used for application specific short-cuts.
+    # applications = ['xbmc', 'rhythmbox', 'vlc']
+    applications = {"vlc"       :   {   'play':['xdotool', 'key', "space"],
+                                        'next':['xdotool', 'key', "n"],
+                                        'prev':['xdotool', 'key', "b"],
+                                        'vol-up':['xdotool', 'key', "ctrl+Up"],
+                                        'vol-down':['xdotool', 'key', "ctrl+Down"], 
+                                    },
+                        
+                    "totem"     :   {   'play':['xdotool', 'key', "space"],
+                                        'next':['xdotool', 'key', "n"],
+                                        'prev':['xdotool', 'key', "b"],
+                                        'vol-up':['xdotool', 'key', "XF86AudioRaiseVolume"],
+                                        'vol-down':['xdotool', 'key', "XF86AudioLowerVolume"],                                     
+                                    },
+                    
+    }
+    
+    # The dictionary with the commands and switches to be run
+    defaults = {'up':['xdotool', 'key', "Up"],
+            'down':['xdotool', 'key', "Down"],
+            'left':['xdotool', 'key', "Left"],
+            'right':['xdotool', 'key', "Right"],
+            'ok':['xdotool', 'key', "KP_Enter"],
+            'play':['xdotool', 'key', "XF86AudioPlay"],
+            'info':['xdotool', 'key', 'Menu'],
+            'back':['xdotool', 'key', "Escape"],
+            'next':['xdotool', 'key', "XF86AudioNext"],
+            'prev':['xdotool', 'key', "XF86AudioPrev"],
+            'xbmc':['xbmc'],
+            'stop':['xdotool', 'key', "XF86AudioStop"],
+            'music': ['xdotool', 'key', "XF86Go"],
+            'vol-up':['xdotool', 'key', "XF86AudioRaiseVolume"],
+            'vol-down':['xdotool', 'key', "XF86AudioLowerVolume"],    
+            }
+    
+    for app in applications:
+        if appRunning(app):
+            if pressed in applications[app]:
+                xdotool(applications[app][pressed])
+    
+    # Was the keypress valid? If so, run the relevant command
+    if pressed in defaults:        
+        xdotool(defaults[pressed])
+    else:
+        print pressed, "command not found, Eish"
+ 
+# This little baby is what sends the command from the dictionary to the kernel to be processed.
+def xdotool(action):
+    ps = subprocess.Popen(action);
+    print action #Comment this out, if you do not want to see which action was taken. Usefull for debugging
+    
+    
+# This is the main loop with a small time delay so we do not chow the CPU to bits
+while 1:
+    
+    # Check if a remote key was pressed by quering Redis
+    if int(Redis.get("read")) == 0:
         
-        # Direction to move the volume
-        directions = {'up':['xdotool', 'key', "XF86AudioRaiseVolume"],
-                      'down':['xdotool', 'key', "XF86AudioLowerVolume"] }
+        # Lets get the command
+        getCommand()  
         
-        # Is the command value in the dictionary above? Then run the relevant command
-        if upDown in directions:        
-            xdotool(directions[upDown])
-        else:
-            print pressed, "you want the volume to go where?"
-     
-    # This little baby is what sends the command from the dictionary to the kernel to be processed.
-    def xdotool(action):
-        ps = subprocess.Popen(action);
-        print action #Comment this out, if you do not want to see which action was taken. Useful for debugging
-        
-        
-    # This is the main loop with a small time delay so we do not chow the CPU to bits
-    while 1:
-        
-        # Check if a remote key was pressed by querying Redis
-        if int(Redis.get("read")) == 0:
-            
-            # Lets get the command
-            getCommand()  
-            
-        time.sleep(0.1) # Little sleep required (Don't we all)
+    time.sleep(0.1) # Little sleep required (Don't we all)
 ```
 
 If everthing works properly, when you access the minisite on your phone and press a button. This is what you can expect to see when running the remote.py in terminal and then pressing a button on the site.

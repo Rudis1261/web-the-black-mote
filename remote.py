@@ -1,8 +1,10 @@
 #!/usr/bin/env python
-import time, subprocess, redis
+import time, subprocess, redis, os, commands
 
 # Lets get connected to Redis
 Redis = redis.Redis("localhost");
+
+
 
 # This will get the current command from Redis and if it's a volume key then run the volume function
 # Otherwise run the commandKeys, these two could be combined but it works now so I will leave it alone
@@ -12,22 +14,45 @@ def getCommand():
     command = Redis.get("command");
     value = Redis.get("value");
     timestamp = Redis.get("timestamp");
-    
-    # Run the command in question
-    if command == 'volume':
-        volume(value)
-        
+
+    # Run the command       
     if command == 'key':        
         commandKeys(value)
     
     # We need to set read to true so we do not loop through the same action all the time     
     Redis.set("read", 1)
  
+# This function will be used to confirm whether an application is running   
+def appRunning(appName):
+    getStatus = commands.getoutput('ps -C ' + appName)
+    if appName in getStatus:
+        return True
+    else:
+        return False
+ 
 # This will perform the actions   
 def commandKeys(pressed):
     
+    # To check which applications are running. This will be used for application specific short-cuts.
+    # applications = ['xbmc', 'rhythmbox', 'vlc']
+    applications = {"vlc"       :   {   'play':['xdotool', 'key', "space"],
+                                        'next':['xdotool', 'key', "n"],
+                                        'prev':['xdotool', 'key', "b"],
+                                        'vol-up':['xdotool', 'key', "ctrl+Up"],
+                                        'vol-down':['xdotool', 'key', "ctrl+Down"], 
+                                    },
+                        
+                    "totem"     :   {   'play':['xdotool', 'key', "space"],
+                                        'next':['xdotool', 'key', "n"],
+                                        'prev':['xdotool', 'key', "b"],
+                                        'vol-up':['xdotool', 'key', "XF86AudioRaiseVolume"],
+                                        'vol-down':['xdotool', 'key', "XF86AudioLowerVolume"],                                     
+                                    },
+                    
+    }
+    
     # The dictionary with the commands and switches to be run
-    keyDict = {'up':['xdotool', 'key', "Up"],
+    defaults = {'up':['xdotool', 'key', "Up"],
             'down':['xdotool', 'key', "Down"],
             'left':['xdotool', 'key', "Left"],
             'right':['xdotool', 'key', "Right"],
@@ -40,26 +65,20 @@ def commandKeys(pressed):
             'xbmc':['xbmc'],
             'stop':['xdotool', 'key', "XF86AudioStop"],
             'music': ['xdotool', 'key', "XF86Go"],
+            'vol-up':['xdotool', 'key', "XF86AudioRaiseVolume"],
+            'vol-down':['xdotool', 'key', "XF86AudioLowerVolume"],    
             }
     
+    for app in applications:
+        if appRunning(app):
+            if pressed in applications[app]:
+                xdotool(applications[app][pressed])
+    
     # Was the keypress valid? If so, run the relevant command
-    if pressed in keyDict:        
-        xdotool(keyDict[pressed])
+    if pressed in defaults:        
+        xdotool(defaults[pressed])
     else:
         print pressed, "command not found, Eish"
-
-# Same as commandKeys, but for volumes
-def volume(upDown):
-    
-    # Direction to move the volume
-    directions = {'up':['xdotool', 'key', "XF86AudioRaiseVolume"],
-                  'down':['xdotool', 'key', "XF86AudioLowerVolume"] }
-    
-    # Is the command value in the dictionary above? Then run the relevant command
-    if upDown in directions:        
-        xdotool(directions[upDown])
-    else:
-        print pressed, "you want the volume to go where?"
  
 # This little baby is what sends the command from the dictionary to the kernel to be processed.
 def xdotool(action):

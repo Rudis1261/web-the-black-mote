@@ -19,33 +19,15 @@ $(".remoteKeys").click(function(event) {
 	});
 });
 
-// Lets set up some quick buttons
-$(document).keypress(function(event) {
-	event.preventDefault();
-	//alert(event.which); // Keep this to check the keys, just uncomment the first section
-	$('[data-keycode="' + event.which + '"]').click();	
-});
-
 // Clear the activity display 
 function clear() {	
 	$(".activity").removeClass("btn-primary btn-danger");
 	$(".activity-icon").removeClass("icon-white");
 };
 
-// When a volume key is pressed.
-$(".volume").click(function(event) {
-        event.preventDefault();        
-        var getVolume = $(this).attr('data-value');	
-	$.get(myScript, { command: "volume", value: getVolume },
-	function(data){
-		if (data == 1)
-		{			
-			$(".activity").addClass("btn-primary");
-			$(".activity-icon").addClass("icon-white");
-		} else {
-			$(".activity").addClass("btn-danger");
-			$(".activity-icon").addClass("icon-white");
-		}
-		setTimeout(clear, 200);
-	});
+// Lets get some shortcuts going
+$(document).keypress(function(event) {
+	event.preventDefault();
+	//alert(event.which); // Keep this to check the keys, just uncomment the first section
+	$('[data-keycode="' + event.which + '"]').click();	
 });

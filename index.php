@@ -126,10 +126,10 @@ if (  (isset($_GET['command']))
             
             <!-- Time for the volume controls -->
             <div class="row">
-                <div class="btn-group">               
-                    <button class="btn btn-large volume" data-keycode="113" data-value="down">Volume Down <i class="icon icon-volume-down"></i></button>                
+                <div class="btn-group">       
+                    <button class="btn btn-large remoteKeys" data-keycode="113" id="vol-down">Volume Down <i class="icon icon-volume-down"></i></button>                
                     <button class="btn btn-large activity"><i class="activity-icon icon icon-heart"></i></button>           
-                    <button class="btn btn-large volume" data-keycode="101" data-value="up">Volume Up <i class="icon icon-volume-up"></i></button>
+                    <button class="btn btn-large remoteKeys" data-keycode="101" id="vol-up">Volume Up <i class="icon icon-volume-up"></i></button>
                 </div>
             </div>
     
