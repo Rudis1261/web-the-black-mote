@@ -1,5 +1,5 @@
-**The short and the long:**
------------
+##Wait I have a better version available!
+###Please check out PyMote, which originated from this ![Show me the money](https://github.com/drpain/pymote). Otherwise continue Reading  
 
 ![Workflow](https://raw.github.com/drpain/web-the-black-mote/master/assets/img/workflow.jpg)  
 
